@@ -12,7 +12,7 @@ const ImageWrapper = ({ data, secureImageUrl, loadSecureUrl, imgProxyUrl }) => {
   }
 
   if (imgProxyUrl) {
-    imageUrl = imgProxyUrl + encodeURI(imageUrl)
+    imageUrl = imgProxyUrl + encodeURIComponent(imageUrl)
   }
 
   return <img
@@ -57,13 +57,18 @@ const CardMedia = ({ data, cardSize, autoPlay, loadSecureUrl, imgProxyUrl }) => 
   const secureImageUrl = data.image && findFirstSecureUrl(data.image, isValidImageURL)
   const secureVideoUrl = data.video && findFirstSecureUrl(data.video, isValidVideoURL)
 
+  let imageUrl = data.image && (secureImageUrl ? secureImageUrl : data.image[0])
+  if (imgProxyUrl) {
+    imageUrl = imgProxyUrl + encodeURIComponent(imageUrl)
+  }
+
   return (
     <>
       {data.type !== ReactTinyLinkType.TYPE_VIDEO && (
         <Media
           className="react_tinylink_card_media"
           cardSize={cardSize}
-          src={data.image && (secureImageUrl ? secureImageUrl : data.image[0])}
+          src={imageUrl}
           type={data.type}
           style={{ WebkitFilter: 'blur(10px)', filter: 'blur(10px)' }}
         >
