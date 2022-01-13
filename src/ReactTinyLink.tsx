@@ -19,6 +19,7 @@ export const ReactTinyLink: React.FC<IReactTinyLinkProps> = ({
   width = '640px',
   noCache = false,
   proxyUrl = 'https://cors-anywhere.herokuapp.com',
+  imgProxyUrl,
   showGraphic = true,
   autoPlay = false,
   defaultMedia = '',
@@ -56,7 +57,7 @@ export const ReactTinyLink: React.FC<IReactTinyLinkProps> = ({
           isShownGraphic={showGraphic}
         >
           {showGraphic && (
-            <CardMedia autoPlay={autoPlay} cardSize={cardSize} data={data} loadSecureUrl={loadSecureUrl} />
+            <CardMedia autoPlay={autoPlay} cardSize={cardSize} data={data} loadSecureUrl={loadSecureUrl} imgProxyUrl={imgProxyUrl} />
           )}
           <ContentWrapper className="react_tinylink_card_content_wrapper" cardSize={cardSize}>
             <Header maxLine={maxLine} minLine={minLine} className="react_tinylink_card_content_header">

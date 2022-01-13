@@ -26,6 +26,7 @@ export interface IReactTinyLinkProps {
     width?: string | number;
     noCache?: boolean;
     proxyUrl?: string;
+    imgProxyUrl?: string;
     loadSecureUrl?: boolean;
     scraper?: (url: string, httpClient: any, defaultMedia: any) => Promise<{
         title: any;

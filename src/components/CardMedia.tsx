@@ -3,12 +3,16 @@ import { Media, Video } from './Card'
 import { ReactTinyLinkType } from '../ReactTinyLinkTypes'
 import { isValidImageURL, isValidVideoURL, findFirstSecureUrl } from '../utils'
 
-const ImageWrapper = ({ data, secureImageUrl, loadSecureUrl }) => {
+const ImageWrapper = ({ data, secureImageUrl, loadSecureUrl, imgProxyUrl }) => {
   if (loadSecureUrl && !secureImageUrl) return null
-  const imageUrl = data.image && ((loadSecureUrl && secureImageUrl) ? secureImageUrl : data.image[0])
+  let imageUrl = data.image && ((loadSecureUrl && secureImageUrl) ? secureImageUrl : data.image[0])
 
   if (!imageUrl) {
     return null
+  }
+
+  if (imgProxyUrl) {
+    imageUrl = imgProxyUrl + encodeURI(imageUrl)
   }
 
   return <img
@@ -49,7 +53,7 @@ const VideoWrapper = ({ data, secureVideoUrl, loadSecureUrl, autoPlay }) => {
 }
 
 
-const CardMedia = ({ data, cardSize, autoPlay, loadSecureUrl }) => {
+const CardMedia = ({ data, cardSize, autoPlay, loadSecureUrl, imgProxyUrl }) => {
   const secureImageUrl = data.image && findFirstSecureUrl(data.image, isValidImageURL)
   const secureVideoUrl = data.video && findFirstSecureUrl(data.video, isValidVideoURL)
 
@@ -63,7 +67,7 @@ const CardMedia = ({ data, cardSize, autoPlay, loadSecureUrl }) => {
           type={data.type}
           style={{ WebkitFilter: 'blur(10px)', filter: 'blur(10px)' }}
         >
-          <ImageWrapper data={data} secureImageUrl={secureImageUrl} loadSecureUrl={loadSecureUrl} />
+          <ImageWrapper data={data} secureImageUrl={secureImageUrl} loadSecureUrl={loadSecureUrl} imgProxyUrl={imgProxyUrl} />
         </Media>
       )}
       {data.type && data.type === ReactTinyLinkType.TYPE_VIDEO && (
