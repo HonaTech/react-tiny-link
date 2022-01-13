@@ -94,7 +94,7 @@ export function useScraper({
         let urlToCall = proxyUrl ? `${proxyUrl}/${url}` : url
         if (isInstagramUrl(url)) {
           const modifiedInstaUrl = `${url}?__a=1&max_id=endcursor`
-          urlToCall = modifiedInstaUrl
+          urlToCall = proxyUrl ? `${proxyUrl}/${modifiedInstaUrl}` : modifiedInstaUrl
         } else if (isTwitterUrl(url)) {
           const modifiedInstaUrl = `https://publish.twitter.com/oembed?url=${url}`
           urlToCall = proxyUrl ? `${proxyUrl}/${modifiedInstaUrl}` : modifiedInstaUrl
